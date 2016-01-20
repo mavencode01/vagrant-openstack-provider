@@ -11,6 +11,8 @@ module VagrantPlugins
           client = env[:openstack_client]
           endpoints = client.session.endpoints
           endpoint_type = config.endpoint_type
+          # FIXME: very hacky
+          endpoint_type = 'url' if config.openstack_auth_version == 'v3'
           @logger.info(I18n.t('vagrant_openstack.client.looking_for_available_endpoints'))
           @logger.info("Selecting endpoints matching region '#{config.region}'") unless config.region.nil?
 

@@ -32,8 +32,14 @@ module VagrantPlugins
       # The authentication endpoint. This defaults to Openstack's global authentication endpoint.
       attr_accessor :openstack_auth_url
 
+      # The authentication endpoint version. This defaults to 'v2.0'.
+      attr_accessor :openstack_auth_version
+
       # Openstack region
       attr_accessor :region
+
+      # Openstack domain (auth v3)
+      attr_accessor :domain
 
       # The flavor of server to launch, either the ID or name. This
       # can also be a regular expression to partially match a name.
@@ -202,8 +208,10 @@ module VagrantPlugins
         @openstack_orchestration_url = UNSET_VALUE
         @openstack_image_url = UNSET_VALUE
         @openstack_auth_url = UNSET_VALUE
+        @openstack_auth_version = UNSET_VALUE
         @endpoint_type = UNSET_VALUE
         @region = UNSET_VALUE
+        @domain = UNSET_VALUE
         @flavor = UNSET_VALUE
         @image = UNSET_VALUE
         @volume_boot = UNSET_VALUE
@@ -285,8 +293,11 @@ module VagrantPlugins
         @openstack_volume_url = nil if @openstack_volume_url == UNSET_VALUE
         @openstack_image_url = nil if @openstack_image_url == UNSET_VALUE
         @openstack_auth_url = nil if @openstack_auth_url == UNSET_VALUE
+        ver = /v[\d\.]+/.match(@openstack_auth_url)
+        @openstack_auth_version = ver[0] if @openstack_auth_version == UNSET_VALUE
         @endpoint_type = 'publicURL' if @endpoint_type == UNSET_VALUE
         @region = nil if @region == UNSET_VALUE
+        @domain = nil if @domain == UNSET_VALUE
         @flavor = nil if @flavor == UNSET_VALUE
         @image = nil if @image == UNSET_VALUE
         @volume_boot = nil if @volume_boot == UNSET_VALUE
