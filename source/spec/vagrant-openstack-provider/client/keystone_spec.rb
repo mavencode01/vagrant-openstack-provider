@@ -1,6 +1,6 @@
 require 'vagrant-openstack-provider/spec_helper'
 
-describe VagrantPlugins::Openstack::KeystoneClient do
+describe VagrantPlugins::Openstack::KeystoneClientV2 do
   let(:http) do
     double('http').tap do |http|
       http.stub(:read_timeout) { 42 }

@@ -11,6 +11,7 @@ describe VagrantPlugins::Openstack::Config do
     its(:password)  { should be_nil }
     its(:openstack_compute_url) { should be_nil }
     its(:openstack_auth_url) { should be_nil }
+    its(:openstack_auth_version) { should eq('v2.0') }
     its(:openstack_orchestration_url) { should be_nil }
     its(:flavor)   { should be_nil }
     its(:image)    { should be_nil }
@@ -33,6 +34,7 @@ describe VagrantPlugins::Openstack::Config do
       :password,
       :openstack_compute_url,
       :openstack_auth_url,
+      :openstack_auth_version,
       :flavor,
       :image,
       :server_name,

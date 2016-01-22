@@ -23,13 +23,26 @@ module VagrantPlugins
         def execute(env)
           client = env[:openstack_client]
           if client.session.token.nil?
-            catalog = client.keystone.authenticate(env)
+            catalog = keystone_authenticate(env)
             @catalog_reader.read(env, catalog)
             override_endpoint_catalog_with_user_config(env)
             check_configuration(env)
             log_endpoint_catalog(env)
           end
           @app.call(env) unless @app.nil?
+        end
+
+        def keystone_authenticate(env)
+          config = env[:machine].provider_config
+          case config.openstack_auth_version
+          when 'v2', 'v2.0'
+            catalog = env[:openstack_client].keystone_v2.authenticate(env)
+          when 'v3'
+            catalog = env[:openstack_client].keystone_v3.authenticate(env)
+          else
+            fail Errors::VagrantOpenstackError, message: format('invalid openstack_auth_version %s', config.openstack_auth_version)
+          end
+          catalog
         end
 
         private

@@ -13,6 +13,7 @@ describe VagrantPlugins::Openstack::Action::ConnectOpenstack do
   let(:config) do
     double.tap do |config|
       config.stub(:openstack_auth_url) { 'http://keystoneAuthV2' }
+      config.stub(:openstack_auth_version) { 'v2.0' }
       config.stub(:openstack_compute_url) { nil }
       config.stub(:openstack_network_url) { nil }
       config.stub(:openstack_volume_url) { nil }

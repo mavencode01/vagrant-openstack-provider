@@ -4,6 +4,7 @@ require 'json'
 require 'vagrant-openstack-provider/client/keystone'
 require 'vagrant-openstack-provider/client/request_logger'
 require 'vagrant-openstack-provider/client/rest_utils'
+require 'vagrant-openstack-provider/action/connect_openstack'
 
 module VagrantPlugins
   module Openstack
@@ -106,7 +107,7 @@ module VagrantPlugins
           nb_retry += 1
           env[:ui].warn(e)
           env[:ui].warn(I18n.t('vagrant_openstack.trying_authentication'))
-          env[:openstack_client].keystone.authenticate(env)
+          keystone_authenticate(env)
           retry if nb_retry < 3
           raise e
         end

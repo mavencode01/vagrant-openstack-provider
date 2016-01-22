@@ -293,8 +293,9 @@ module VagrantPlugins
         @openstack_volume_url = nil if @openstack_volume_url == UNSET_VALUE
         @openstack_image_url = nil if @openstack_image_url == UNSET_VALUE
         @openstack_auth_url = nil if @openstack_auth_url == UNSET_VALUE
-        ver = /v[\d\.]+/.match(@openstack_auth_url)
-        @openstack_auth_version = ver[0] if @openstack_auth_version == UNSET_VALUE
+        ver = /v[\d\.]+/.match(@openstack_auth_url)[0] unless @openstack_auth_url.nil?
+        ver = 'v2.0' if ver.nil?
+        @openstack_auth_version = ver if @openstack_auth_version == UNSET_VALUE
         @endpoint_type = 'publicURL' if @endpoint_type == UNSET_VALUE
         @region = nil if @region == UNSET_VALUE
         @domain = nil if @domain == UNSET_VALUE

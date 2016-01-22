@@ -32,8 +32,12 @@ module VagrantPlugins
       Session.instance
     end
 
-    def self.keystone
-      Openstack::KeystoneClient.instance
+    def self.keystone_v2
+      Openstack::KeystoneClientV2.instance
+    end
+
+    def self.keystone_v3
+      Openstack::KeystoneClientV3.instance
     end
 
     def self.nova
